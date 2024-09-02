@@ -11,11 +11,12 @@ def emotion_detector(text_to_analyse):
     myobj = { "raw_document": { "text": text_to_analyse } }
     response = requests.post(url, json = myobj, headers=header, timeout=10)
     formatted_response = json.loads(response.text)
-    anger = formatted_response['emotionPredictions'][0]['emotion']['anger']
-    disgust = formatted_response['emotionPredictions'][0]['emotion']['disgust']
-    fear = formatted_response['emotionPredictions'][0]['emotion']['fear']
-    joy = formatted_response['emotionPredictions'][0]['emotion']['joy']
-    sadness = formatted_response['emotionPredictions'][0]['emotion']['sadness']
-    dominant_emotion = max(formatted_response['emotionPredictions'][0]['emotion'],key=formatted_response['emotionPredictions'][0]['emotion'].get)
+    emotions_list=formatted_response['emotionPredictions'][0]['emotion']
+    anger = emotions_list['anger']
+    disgust = emotions_list['disgust']
+    fear = emotions_list['fear']
+    joy = emotions_list['joy']
+    sadness = emotions_list['sadness']
+    dominant_emotion = max(emotions_list,key=emotions_list.get)
 
     return {'anger': anger, 'disgust': disgust,'fear': fear,'joy': joy,'sadness': sadness,'dominant_emotion': dominant_emotion}
